@@ -1,0 +1,104 @@
+﻿html{   
+    width: 100%;   
+    height: 100%;   
+    overflow: hidden;   
+    font-style: sans-serif; 
+}   
+body{   
+    width: 100%;   
+    height: 100%;   
+       
+    margin: 0;   
+    /*background-color: #4A374A;*/   
+    background-color: #402030;
+}   
+
+h1{ 
+	font-family: 'Open Sans',sans-serif;
+    font-size: 2em;   
+    margin: 0.67em 0;
+}   
+
+#register{   
+    /*position: absolute;   
+    top: 50%;   
+    left:50%; 
+    margin: -150px 0 0 -150px;*/
+    width: 1000px;   
+    height: 300px;   
+    margin: 0 auto;
+}   
+#register h1{   
+    color: #fff;   
+    text-shadow:0 0 10px;   
+    letter-spacing: 1px;   
+    text-align: center;   
+}   
+
+.errortip {
+	position: absolute;margin-left:8px ;
+	color: red;
+}
+
+input{   
+	font-family: "微软雅黑";
+    width: 250px;   
+    height: 15px;   
+    margin-bottom: 10px;   
+    outline: none;   
+    padding: 10px;   
+    font-size: 13px;   
+    color: #D3D3D3;   
+    text-shadow:1px 1px 1px;   
+    border-top: 1px solid #312E3D;   
+    border-left: 1px solid #312E3D;   
+    border-right: 1px solid #312E3D;   
+    border-bottom: 1px solid #56536A;   
+    border-radius: 4px;   
+    background-color: #2D2D3F;   
+    
+}   
+label,span{
+	font-family: 楷体;
+}
+
+.but{
+	font-family: "楷体";
+    width: 272px;   
+    min-height: 20px;   
+    display: block;   
+    color: #fff;   
+    padding: 9px 14px;   
+    font-size: 20px;   
+    line-height: normal;   
+    border-radius: 5px;   
+    margin: 0 auto;   
+}
+
+#login_but{   
+    background-color: #4a77d4;   
+    border: 1px solid #3762bc;   
+}  
+
+#login_but:hover{
+	color: black;
+	cursor: pointer;
+	border: 2px solid #ADD8E6;
+}
+
+#register_but{     
+    background-color: rgb(84,176,18);   
+    border: 1px solid #228b22;   
+    
+}  
+
+#register_but:hover{
+	color: black;
+	cursor: pointer;
+	border: 2px solid #ADD8E6;
+}
+
+.regdiv{
+	height:50px;line-height: 50px;overflow:hidden;
+	width:800px;margin: 0 auto; text-align: center;
+}

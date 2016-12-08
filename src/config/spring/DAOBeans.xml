@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "file:///C:/Users/10033/Documents/StudyData/WEB/spring-beans.dtd">
+<beans>
+	<import resource="Necessary.xml"/>
+	<!-- 配置DAO的类 -->
+    <bean id="userDao" class="app.dao.UserDaoImpl" >
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="pictureDao" class="app.dao.PictureDaoImpl" >
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="blogtextDao" class="app.dao.BlogTextDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="MyAppDAO" class="app.dao.MyAppDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

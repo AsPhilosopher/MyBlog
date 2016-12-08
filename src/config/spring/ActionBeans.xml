@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "file:///C:/Users/10033/Documents/StudyData/WEB/spring-beans-2.0.dtd">
+<beans>
+	<import resource="ServiceBeans.xml" />
+	<!-- 配置Action -->
+     <bean id="loginAction" class="app.action.LoginAction" scope="prototype">
+     	<property name="userService" ref="userService"></property>
+    </bean>
+    <bean id="registerAction" class="app.action.RegisterAction" scope="prototype">
+    </bean>
+    
+    <bean id="MyEditor" class="app.action.MyEditorAction" scope="prototype">
+    </bean>
+    
+    <bean id="copy" class="app.action.ClipBoardAction" scope="prototype"></bean>
+    <bean id="picture" class="app.action.PictureAction" scope="prototype">
+    	<property name="pictureService" ref="pictureService"></property>
+    </bean>
+    
+    <bean id="upanddownPicture" class="app.action.ImgUpAndDownAction" scope="prototype">
+    	<property name="pathUtil" ref="mypath"></property>
+    	<property name="pictureService" ref="pictureService"></property>
+    </bean>
+    
+    <bean id="editorAction" class="app.action.EditorAction">
+    	<property name="blogTextService" ref="blogtextService"></property>
+    </bean>
+    <!-- <bean id="textListAndDisplayAction" class="app.action.TextListAndDisplayAction"></bean> -->
+    
+    <bean id="MyAppAction"  class="app.action.MyAppAction">
+    	<property name="myAppDAO" ref="MyAppDAO"></property>
+    </bean>
+    
+    <bean id="MyDispatchAction"  class="app.action.MyDispatchAction">
+    	<property name="pathUtil" ref="mypath"></property>
+    	<property name="myAppAction" ref="MyAppAction"></property>
+    </bean>
+    
+    <bean id="MyAjaxAction"  class="app.action.MyAjaxAction">
+    	<property name="myAppAction" ref="MyAppAction"></property>
+    </bean>
+    
+</beans>

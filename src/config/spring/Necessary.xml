@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 引入外部的属性文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>	
+	<!-- 配置连接池 -->
+	<!-- com.mchange.v2.c3p0.ComboPooledDataSource -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		
+	</bean>	
+	
+	<!-- 配置hibernate的相关属性 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!-- 注入连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 配置hibernate的属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				
+				<!-- 连接池中JDBC连接的最小数量。Hibernate默认为1 -->  
+                <prop key="hibernate.c3p0.min_size">${pool.minimumConnectionCount}</prop>  
+                <!-- 连接池中JDBC连接的最大数量。Hibernate默认为100 -->  
+                <prop key="hibernate.c3p0.max_size">${pool.maximumConnectionCount}</prop>  
+                <!-- 何时从连接池中移除一个空闲的连接（以秒为单位）时。Hibernate默认为0，永不过期 -->  
+                <prop key="hibernate.c3p0.timeout">${pool.timeout}</prop>  
+                <!-- 被缓存的预编译语句数量。用来提高性能。Hibernate默认为0，缓存不可用 -->  
+                <prop key="c3p0.max_statements">${pool.max_statements}</prop>  
+                
+                <!-- 一个连接被自动验证前的闲置时间（以秒为单位）。Hibernate默认为0 -->  
+                <!--<prop key="hibernate.c3p0.idle_test_period">300</prop>   -->
+                
+                <!-- 当连接池里面的连接用完的时候，C3P0一下获取的新的连接数 -->  
+                <prop key="hibernate.c3p0.acquire_increment">${pool.acquire_increment}</prop>  
+                <!-- 每次都验证连接是否可用 -->  
+                <prop key="hibernate.c3p0.validate">true</prop>  
+				
+			</props>
+		</property>
+		<!-- 加载hibernate中的映射文件 -->
+		<!-- <property name="mappingResources">
+			<list>
+				<value>config/hibernate/User.hbm.xml</value>
+			</list>
+		</property> -->
+		
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath*:hibernate
+				</value>
+			</list>
+		</property>
+		
+	</bean>
+	
+    
+   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">
+					PROPAGATION_REQUIRED,ISOLATION_DEFAULT,timeout_3000
+				</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="list*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+    <!-- 开启注解事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+	
+</beans>

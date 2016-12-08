@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- Constants -->
+	<constant name="struts.i18n.reload" value="true" />
+	<!-- 国际化支持 -->
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	
+	<constant name="struts.devMode" value="false"></constant>
+	<!-- <constant name="struts.action.extension"  value="do"></constant> -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	
+	<!-- <constant name="struts.objectFactory" value="spring" /> -->
+
+
+	<package name="second" extends="struts-default">
+	
+		<!-- <default-action-ref name="pagenotfound"></default-action-ref> -->
+	
+		<global-results>
+			<result name="login">/jsp/LoginAndRegister/login.jsp</result>
+		</global-results>
+
+		
+		<action name="MyBlog_*" class="MyDispatchAction" method="{1}">
+	   		<result name="displayText">/jsp/Editor/text_display.jsp</result>
+	   		<result name="deleteText">/mydispatch.jsp</result>
+	   		<result name="none">/mydispatch.jsp</result>
+	   		<result name="modifyText">/jsp/Editor/modifyEditor.jsp</result>
+	   		<result name="showList">/jsp/Editor/text_list.jsp</result>
+	   		<result name="searchWord">/jsp/Editor/text_list.jsp</result>
+	   		<result name="register">/jsp/LoginAndRegister/register.jsp</result>
+	   		<result name="uploadImg">/jsp/LoginAndRegister/reheadimg.jsp</result>
+	   		<result name="modifyMsg">/jsp/LoginAndRegister/resetMsg.jsp</result>
+	   		<result name="modifyPsw">/jsp/LoginAndRegister/repsw.jsp</result>
+	   </action>
+	</package>
+	
+	<package name="Jsecond" extends="json-default">
+		<action name="MyJBlog_*" class="MyAjaxAction" method="{1}">
+			<result name="SAVE_BLOG_SUCCESS" type="json"></result>
+			<result name="MODIFY_SUCCESS" type="json"></result>
+			<result name="REGISTER_SUCCESS" type="json"></result>
+			<result name="MODIFY_MSG_SUCCESS" type="json"></result>
+			<result name="MODIFY_PSW_SUCCESS" type="json"></result>
+		</action>
+	</package>
+
+
+
+
+	<package name="default"  extends="struts-default">
+	
+	<!-- <default-action-ref name="pagenotfound"></default-action-ref> -->
+	
+		<global-results>
+			<result name="login">/jsp/LoginAndRegister/login.jsp</result>
+		</global-results>
+		
+		<!-- <action name="404">  
+	   		<result>_404error.jsp</result>  
+	   </action> -->
+	   
+		<!-- <action name="titleList" class="textListAndDisplayAction" method="titleList">
+			<result>/jsp/Editor/text_list.jsp</result>
+		</action> -->
+		
+		<action name="editor" class="editorAction">
+			<result>/jsp/Editor/myeditor.jsp</result>
+		</action>
+		
+	
+		<action name="login" class="loginAction" >
+			<result>/jsp/LoginAndRegister/login.jsp</result>
+		</action>
+		
+		<action name="register" class="registerAction" >
+			<result>/jsp/LoginAndRegister/register.jsp</result>
+		</action>
+		
+		<!-- <action name="second/MyBlog_showList" class="loginAction" >
+			<result>/jsp/Editor/text_list.jsp</result>
+		</action> -->
+		
+		<action name="picture" class="picture">
+			<result>/jsp/Picture/picture.jsp</result>
+		</action>
+		
+		<action name="upload" class="upanddownPicture">
+					<result>/jsp/Picture/picture.jsp</result>
+					<result name="empty">/jsp/Picture/picture.jsp</result>
+		</action>
+		
+		<action name="download" class="upanddownPicture"  method="download">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+				<param name="bufferSize">8192</param>
+			</result>
+			<result name="empty">error.jsp</result>
+		</action>
+		
+	</package>
+	
+	<package name="/" extends="json-default">
+		<action name="user_*" class="loginAction" method="{1}" >
+			<result name="MYERROR" type="json">
+				<!-- <param name="root">map</param> -->
+			</result>
+		</action>
+		
+		<action name="picture_copy" class="copy" method="copy">
+			<result name="COPYSUCCESS" type="json"></result>
+		</action>
+		
+	</package>
+	
+	
+	<!-- <package name="test" namespace="/test"  extends="struts-default">
+		<action name="testEditor" class="testEditor"  >
+			<result>/jsp/Editor/myresult.jsp</result>
+		</action>
+	</package> -->
+	
+</struts>
