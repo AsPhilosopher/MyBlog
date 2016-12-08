@@ -50,7 +50,8 @@ public class PictureDaoImpl extends HibernateDaoSupport implements PictureDao {
 		//起始位置
 		int fromIndex	= (int) (SomeConstant.EACHPAGE_IMGNUM * (nowpage -1));    //System.out.println(fromIndex+"&&&&&");////
 		
-		Session hbsession = this.getSessionFactory().openSession();
+//		Session hbsession = this.getSessionFactory().openSession();
+		Session hbsession = this.getSessionFactory().getCurrentSession();
 		Query hqlQuery = hbsession.createQuery(hql.toString());
 		hqlQuery.setFirstResult(fromIndex);
 		int totaltemp = (int) (totalRecord/1);
